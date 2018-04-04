@@ -34,15 +34,15 @@ Report the results of each approach in an RMarkdown sentence without hard-coding
 
 **t.test**
 
-A paired-samples t-test was conducted to compare means for city and highway fuel consumption. There was a significant difference in mileage for city (*M* = `mean(mpg$cty, na.rm=T)`,*SD* = `sd(mpg$cty, na.rm=T)`) and highway (*M* = `mean(mpg$hwy, na.rm=T)`,*SD* = `sd(mpg$hwy, na.rm=T)`); *t*(`fit1$parameter`) = `fit1$statistic`, \``frmtp(fit1$p.value, digit = 3, markup = "markdown", case = "lower")`, *Cohen's d* = `fit1$effsize`.
+A paired-samples t-test was conducted to compare means for city and highway fuel consumption. There was a significant difference in mileage for city (*M* = `mean(mpg$cty, na.rm=T)`, *SD* = `sd(mpg$cty, na.rm=T)`) and highway (*M* = `mean(mpg$hwy, na.rm=T)`, *SD* = `sd(mpg$hwy, na.rm=T)`); *t*(`fit1$parameter`) = `fit1$statistic`, \``frmtp(fit1$p.value, digit = 3, markup = "markdown", case = "lower")`, *Cohen's d* = `fit1$effsize`.
 
-A paired-samples t-test was conducted to compare means for city and highway fuel consumption. There was a significant difference in mileage for city (*M* = 16.859,*SD* = 4.256) and highway (*M* = 23.44,*SD* = 5.955); *t*(233) = -44.492, *p* &lt; 0.001, *Cohen's d* = -2.909.
+A paired-samples t-test was conducted to compare means for city and highway fuel consumption. There was a significant difference in mileage for city (*M* = 16.859, *SD* = 4.256) and highway (*M* = 23.44, *SD* = 5.955); *t*(233) = -44.492, *p* &lt; 0.001, *Cohen's d* = -2.909.
 
 **jamovi**
 
-A paired-samples t-test was conducted to compare means for city and highway fuel consumption. There was a significant difference in mileage for city (*M* = `mean(mpg$cty,na.rm=T)`,*SD* = `sd(mpg$cty, na.rm=T)`) and highway (*M* = `mean(mpg$hwy, na.rm=T)`,*SD* = `sd(mpg$hwy, na.rm = T)`); *t*(233) = `fit2$stat`, `frmtp(fit2$p, digit = 3, markup = "markdown", case = "lower")`, *Cohen's d* = `fit2$es`
+A paired-samples t-test was conducted to compare means for city and highway fuel consumption. There was a significant difference in mileage for city (*M* = `mean(mpg$cty,na.rm=T)`,*SD* = `sd(mpg$cty, na.rm=T)`) and highway (*M* = `mean(mpg$hwy, na.rm=T)`, *SD* = `sd(mpg$hwy, na.rm = T)`); *t*(233) = `fit2$stat`, `frmtp(fit2$p, digit = 3, markup = "markdown", case = "lower")`, *Cohen's d* = `fit2$es`
 
-A paired-samples t-test was conducted to compare means for city and highway fuel consumption. There was a significant difference in mileage for city (*M* = 16.859,*SD* = 4.256) and highway (*M* = 23.44,*SD* = 5.955); *t*(233) = -44.492, *p* &lt; 0.001, *Cohen's d* = -2.909
+A paired-samples t-test was conducted to compare means for city and highway fuel consumption. There was a significant difference in mileage for city (*M* = 16.859, *SD* = 4.256) and highway (*M* = 23.44, *SD* = 5.955); *t*(`fit2$df`) = -44.492, *p* &lt; 0.001, *Cohen's d* = -2.909
 
 ### 1.2
 
@@ -64,7 +64,7 @@ ttests1 <- mpg %>% group_by(class) %>%
 Sys.time() - t
 ```
 
-    ## Time difference of 0.115 secs
+    ## Time difference of 0.121 secs
 
 ``` r
 t <- Sys.time()
@@ -77,7 +77,7 @@ for(i in unique(mpg$class)){
 Sys.time() - t
 ```
 
-    ## Time difference of 0.906 secs
+    ## Time difference of 0.867 secs
 
 It is possible to do with Jamovi. However, I doubt that this approach is efficient. First, Jamovi is just a programme with precoded limited functionality while R is a full-fledged flexible programming language. The second reason is ...
 
@@ -97,7 +97,9 @@ ggplot(ttests1, aes(reorder(class, - estimate), estimate)) + geom_bar(stat = "id
 
 ![](ex8_files/figure-markdown_github/unnamed-chunk-3-1.png)
 
-2.4.Create an additional column in the tibble with Bonferroni corrected p values of the t-tests (i.e., multiply every p value with the total number of t-tests computed). Don't forget to first cancel the grouping using ungroup() before mutating the new column if you plan to use n() as multiplier.
+### 2.4
+
+Create an additional column in the tibble with Bonferroni corrected p values of the t-tests (i.e., multiply every p value with the total number of t-tests computed). Don't forget to first cancel the grouping using ungroup() before mutating the new column if you plan to use n() as multiplier.
 
 ``` r
 ttests1 <- ttests1 %>% ungroup %>% mutate(pBonferroni = p.value*n())

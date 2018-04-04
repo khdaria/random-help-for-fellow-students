@@ -96,7 +96,9 @@ ggplot(ttests1, aes(reorder(class, - estimate), estimate)) + geom_bar(stat = "id
   ylab("Class")
 ```
 
-2.4.Create an additional column in the tibble with Bonferroni corrected p values of the t-tests (i.e., multiply every p value with the total number of t-tests computed). Don't forget to first cancel the grouping using ungroup() before mutating the new column if you plan to use n() as multiplier.
+### 2.4
+
+Create an additional column in the tibble with Bonferroni corrected p values of the t-tests (i.e., multiply every p value with the total number of t-tests computed). Don't forget to first cancel the grouping using ungroup() before mutating the new column if you plan to use n() as multiplier.
 
 ```{r}
 ttests1 <- ttests1 %>% ungroup %>% mutate(pBonferroni = p.value*n())
