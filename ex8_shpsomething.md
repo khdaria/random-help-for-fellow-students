@@ -34,9 +34,13 @@ Report the results of each approach in an RMarkdown sentence without hard-coding
 
 **t.test**
 
+A paired-samples t-test was conducted to compare means for city and highway fuel consumption. There was a significant difference in mileage for city (*M* = `mean(mpg$cty, na.rm=T)`,*SD* = `sd(mpg$cty, na.rm=T)`) and highway (*M* = `mean(mpg$hwy, na.rm=T)`,*SD* = `sd(mpg$hwy, na.rm=T)`); *t*(`fit1$parameter`) = `fit1$statistic`, \``frmtp(fit1$p.value, digit = 3, markup = "markdown", case = "lower")`, *Cohen's d* = `fit1$effsize`.
+
 A paired-samples t-test was conducted to compare means for city and highway fuel consumption. There was a significant difference in mileage for city (*M* = 16.859,*SD* = 4.256) and highway (*M* = 23.44,*SD* = 5.955); *t*(233) = -44.492, *p* &lt; 0.001, *Cohen's d* = -2.909.
 
 **jamovi**
+
+A paired-samples t-test was conducted to compare means for city and highway fuel consumption. There was a significant difference in mileage for city (*M* = `mean(mpg$cty,na.rm=T)`,*SD* = `sd(mpg$cty, na.rm=T)`) and highway (*M* = `mean(mpg$hwy, na.rm=T)`,*SD* = `sd(mpg$hwy, na.rm = T)`); *t*(233) = `fit2$stat`, `frmtp(fit2$p, digit = 3, markup = "markdown", case = "lower")`, *Cohen's d* = `fit2$es`
 
 A paired-samples t-test was conducted to compare means for city and highway fuel consumption. There was a significant difference in mileage for city (*M* = 16.859,*SD* = 4.256) and highway (*M* = 23.44,*SD* = 5.955); *t*(233) = -44.492, *p* &lt; 0.001, *Cohen's d* = -2.909
 
@@ -60,7 +64,7 @@ ttests1 <- mpg %>% group_by(class) %>%
 Sys.time() - t
 ```
 
-    ## Time difference of 0.118 secs
+    ## Time difference of 0.115 secs
 
 ``` r
 t <- Sys.time()
@@ -73,7 +77,7 @@ for(i in unique(mpg$class)){
 Sys.time() - t
 ```
 
-    ## Time difference of 0.942 secs
+    ## Time difference of 0.906 secs
 
 It is possible to do with Jamovi. However, I doubt that this approach is efficient. First, Jamovi is just a programme with precoded limited functionality while R is a full-fledged flexible programming language. The second reason is ...
 
@@ -112,6 +116,8 @@ weather_jfk_ewr <- filter(weather, origin %in% c("JFK", "EWR"))
 fit <- t.test(wind_speed ~ origin, data = weather_jfk_ewr) %>% tidy %>%
   mutate(effsize = effsize::cohen.d(wind_speed ~ origin, data = weather_jfk_ewr)$estimate)
 ```
+
+An independent samples t-test was conducted to compare average wind speed at JFK and Newark airports. There was a significant difference in average wind speed at JFK (*M* = `mean(filter(weather, origin == "JFK")$wind_speed, na.rm=T)`,*SD* = `sd(filter(weather, origin == "JFK")$wind_speed, na.rm=T)`) and at Newark *M* = `mean(filter(weather, origin == "EWR")$wind_speed, na.rm=T)`,*SD* = `sd(filter(weather, origin == "EWR")$wind_speed, na.rm=T)`); *t*(`fit$parameter`) = `fit$statistic`, `frmtp(fit$p.value, digit = 3, markup = "markdown", case = "lower")`, *Cohen's d* = `fit$effsize`.
 
 An independent samples t-test was conducted to compare average wind speed at JFK and Newark airports. There was a significant difference in average wind speed at JFK (*M* = 11.356,*SD* = 5.876) and at Newark *M* = 9.334,*SD* = 12.332); *t*(12465.032) = -13.808, *p* &lt; 0.001, *Cohen's d* = -0.209.
 
@@ -218,6 +224,8 @@ pander::pander(tidyfit, round=3)
 </tbody>
 </table>
 
+Different weather indicators explained a significant proportion of variance in arrival delay, *R*<sup>2</sup> = `summary(fit)$adj.r.squared`, *F*(`summary(fit)$fstatistic[2]`, `summary(fit)$fstatistic[3]`) = `summary(fit)$fstatistic[1]`, `frmtp(stats::anova(lm(arr_delay ~ ., data=to_lm))$'Pr(>F)'[1], digit = 3, markup = "markdown", case = "lower")`
+
 Different weather indicators explained a significant proportion of variance in arrival delay, *R*<sup>2</sup> = 0.024, *F*(8, 285696) = 891.043, *p* &lt; 0.001
 
 Three strongest predictors are air temperature, dewpoint, relative humidity
@@ -311,6 +319,8 @@ pander::pander(tidyfit2, round=3)
 </tbody>
 </table>
 
+Temperature, dewpoint, relative humidity, and all interactions among them explained a significant proportion of variance in arrival delay, *R*<sup>2</sup> = `summary(fit2)$adj.r.squared`, *F*(`summary(fit2)$fstatistic[2]`, `summary(fit2)$fstatistic[3]`) = 932.046, `frmtp(stats::anova(lm(form, data=to_lm))$'Pr(>F)'[1], digit = 3, markup = "markdown", case = "lower")`. There is a significant interaction between temperature and dewpoint.
+
 Temperature, dewpoint, relative humidity, and all interactions among them explained a significant proportion of variance in arrival delay, *R*<sup>2</sup> = 0.019, *F*(6, 285698) = 932.046, *p* &lt; 0.001. There is a significant interaction between temperature and dewpoint.
 
 ### 3.4
@@ -362,6 +372,8 @@ options(contrasts = c('contr.sum','contr.poly'))
 fit <- heplots::etasq(lm(arr_delay ~ origin + dest, data=flights), anova = T,type="III") %>%
   tidy()
 ```
+
+A two-way ANOVA was run to examine the effect of origin and destination on arrival delay. The analysis revealed the significant effect of origin, *F*(`fit$df[fit$term == "origin"]`, `fit$df[fit$term == "Residuals"]`) = `fit$statistic[fit$term == "origin"]`, `frmtp(fit$p.value[fit$term == "origin"], digit = 3, markup = "markdown", case = "lower")`, *η*<sup>2</sup>*p* = `fit$Partial.eta.2[fit$term == "origin"]`. Moreover, the significant effect for destination has also been found, *F*(`fit$df[fit$term == "dest"]`, `fit$df[fit$term == "Residuals"]`) = `fit$statistic[fit$term == "dest"]`, `frmtp(fit$p.value[fit$term == "dest"], digit = 3, markup = "markdown", case = "lower")`, *η*<sup>2</sup>*p* = `fit$Partial.eta.2[fit$term == "dest"]`. Destination has the strongest effect on arrival delay
 
 A two-way ANOVA was run to examine the effect of origin and destination on arrival delay. The analysis revealed the significant effect of origin, *F*(2, 327240) = 223.433, *p* &lt; 0.001, *η*<sup>2</sup>*p* = 0.001. Moreover, the significant effect for destination has also been found, *F*(103, 327240) = 36.673, *p* &lt; 0.001, *η*<sup>2</sup>*p* = 0.011. Destination has the strongest effect on arrival delay
 
@@ -422,5 +434,7 @@ pander::pander(tidyfit, round = 3)
 </tr>
 </tbody>
 </table>
+
+Origins explained a significant proportion of variance in arrival delay, *R*<sup>2</sup> = `summary(fit)$adj.r.squared`, *F*(`summary(fit)$fstatistic[2]`, `summary(fit)$fstatistic[3]`) = `summary(fit)$fstatistic[1]`, `frmtp(stats::anova(lm(arr_delay ~ origin, data=flights))$'Pr(>F)'[1], digit = 3, markup = "markdown", case = "lower")`. Since Newark is a reference category, an average delay in this airport equal the intercept. It was found that delays in JFK are smaller (*β* = `summary(fit)$coefficients[2,1]`, `frmtp(summary(fit)$coefficients[2,4], digit = 3, markup = "markdown", case = "lower")`). The same trend was observed for LGA (*β* = `summary(fit)$coefficients[3,1]`, `frmtp(summary(fit)$coefficients[3,4], digit = 3, markup = "markdown", case = "lower")`).
 
 Origins explained a significant proportion of variance in arrival delay, *R*<sup>2</sup> = 0.001, *F*(2, 327343) = 224.934, *p* &lt; 0.001. Since Newark is a reference category, an average delay in this airport equal the intercept. It was found that delays in JFK are smaller (*β* = 2.293, *p* &lt; 0.001). The same trend was observed for LGA (*β* = -1.263, *p* &lt; 0.001).
