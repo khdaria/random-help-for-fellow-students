@@ -40,15 +40,15 @@ Report the results of each approach in an RMarkdown sentence without hard-coding
 
 **t.test**
 
-A paired-samples t-test was conducted to compare means for city and highway fuel consumption. There was a significant difference in mileage for city (*M* = `mean(mpg$cty, na.rm=T)`,*SD* = `sd(mpg$cty, na.rm=T)`) and highway (*M* = `mean(mpg$hwy, na.rm=T)`,*SD* = `sd(mpg$hwy, na.rm=T)`); *t*(`fit1$parameter`) = `fit1$statistic`, ``frmtp(fit1$p.value, digit = 3, markup = "markdown", case = "lower")`, *Cohen's d* = `fit1$effsize`.
+A paired-samples t-test was conducted to compare means for city and highway fuel consumption. There was a significant difference in mileage for city (*M* = `mean(mpg$cty, na.rm=T)`, *SD* = `sd(mpg$cty, na.rm=T)`) and highway (*M* = `mean(mpg$hwy, na.rm=T)`, *SD* = `sd(mpg$hwy, na.rm=T)`); *t*(`fit1$parameter`) = `fit1$statistic`, ``frmtp(fit1$p.value, digit = 3, markup = "markdown", case = "lower")`, *Cohen's d* = `fit1$effsize`.
 
-A paired-samples t-test was conducted to compare means for city and highway fuel consumption. There was a significant difference in mileage for city (*M* = `r mean(mpg$cty, na.rm=T)`,*SD* = `r sd(mpg$cty, na.rm=T)`) and highway (*M* = `r mean(mpg$hwy, na.rm=T)`,*SD* = `r sd(mpg$hwy, na.rm=T)`); *t*(`r fit1$parameter`) = `r fit1$statistic`, `r frmtp(fit1$p.value, digit = 3, markup = "markdown", case = "lower")`, *Cohen's d* = `r fit1$effsize`.
+A paired-samples t-test was conducted to compare means for city and highway fuel consumption. There was a significant difference in mileage for city (*M* = `r mean(mpg$cty, na.rm=T)`, *SD* = `r sd(mpg$cty, na.rm=T)`) and highway (*M* = `r mean(mpg$hwy, na.rm=T)`, *SD* = `r sd(mpg$hwy, na.rm=T)`); *t*(`r fit1$parameter`) = `r fit1$statistic`, `r frmtp(fit1$p.value, digit = 3, markup = "markdown", case = "lower")`, *Cohen's d* = `r fit1$effsize`.
 
 **jamovi**
 
-A paired-samples t-test was conducted to compare means for city and highway fuel consumption. There was a significant difference in mileage for city (*M* = `mean(mpg$cty,na.rm=T)`,*SD* = `sd(mpg$cty, na.rm=T)`) and highway (*M* = `mean(mpg$hwy, na.rm=T)`,*SD* = `sd(mpg$hwy, na.rm = T)`); *t*(`r fit2$df`) = `fit2$stat`, `frmtp(fit2$p, digit = 3, markup = "markdown", case = "lower")`, *Cohen's d* = `fit2$es`
+A paired-samples t-test was conducted to compare means for city and highway fuel consumption. There was a significant difference in mileage for city (*M* = `mean(mpg$cty,na.rm=T)`,*SD* = `sd(mpg$cty, na.rm=T)`) and highway (*M* = `mean(mpg$hwy, na.rm=T)`, *SD* = `sd(mpg$hwy, na.rm = T)`); *t*(`r fit2$df`) = `fit2$stat`, `frmtp(fit2$p, digit = 3, markup = "markdown", case = "lower")`, *Cohen's d* = `fit2$es`
 
-A paired-samples t-test was conducted to compare means for city and highway fuel consumption. There was a significant difference in mileage for city (*M* = `r mean(mpg$cty,na.rm=T)`,*SD* = `r sd(mpg$cty, na.rm=T)`) and highway (*M* = `r mean(mpg$hwy, na.rm=T)`,*SD* = `r sd(mpg$hwy, na.rm = T)`); *t*(`r fit2$df`) = `r fit2$stat`, `r frmtp(fit2$p, digit = 3, markup = "markdown", case = "lower")`, *Cohen's d* = `r fit2$es`
+A paired-samples t-test was conducted to compare means for city and highway fuel consumption. There was a significant difference in mileage for city (*M* = `r mean(mpg$cty,na.rm=T)`, *SD* = `r sd(mpg$cty, na.rm=T)`) and highway (*M* = `r mean(mpg$hwy, na.rm=T)`, *SD* = `r sd(mpg$hwy, na.rm = T)`); *t*(`fit2$df`) = `r fit2$stat`, `r frmtp(fit2$p, digit = 3, markup = "markdown", case = "lower")`, *Cohen's d* = `r fit2$es`
 
 ### 1.2
 
